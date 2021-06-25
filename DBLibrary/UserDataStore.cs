@@ -8,7 +8,7 @@ using System.Data.SqlClient;
 
 namespace DBLibrary
 {
-    class UserDataStore
+    public class UserDataStore
     {
 
         SqlConnection connection = null;
@@ -22,7 +22,7 @@ namespace DBLibrary
 
         public bool validateUser_connected(UserData user)
         {
-            string sql = "SELECT * FROM USERDATE WHERE username=@uname AND password=@pass";
+            string sql = "SELECT * FROM userdata WHERE username=@uname AND password=@pass";
             command = new SqlCommand(sql, connection);
             command.Parameters.Add("uname", user.UserName);
             command.Parameters.Add("pass", user.Password);
@@ -39,16 +39,18 @@ namespace DBLibrary
 
                 }
 
-                
-            }
-            catch (SqlException ex)
-            {
-                Console.WriteLine(ex.Message);
+                return false;
+
 
             }
-            catch (Exception ex)
+            catch (SqlException)
             {
-                Console.WriteLine(ex.Message);
+                throw;
+
+            }
+            catch (Exception)
+            {
+                throw;
 
             }
             finally
@@ -59,13 +61,13 @@ namespace DBLibrary
                 }
             }
 
-            return false;
+            
         }
 
         public bool validateUser_disconnected(UserData user)
         {
 
-            string sql = "SELECT * FROM USERDATE";
+            string sql = "SELECT * FROM userdata";
             SqlDataAdapter adapter = new SqlDataAdapter(sql, connection);
             DataSet ds = new DataSet();
             adapter.Fill(ds, "user");

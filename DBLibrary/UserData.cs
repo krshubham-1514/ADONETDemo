@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DBLibrary
 {
-    class UserData
+    public class UserData
     {
 
         public string UserName { get; set; }

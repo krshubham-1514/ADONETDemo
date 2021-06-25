@@ -208,8 +208,10 @@ namespace DBLibrary
 
                 string sql = "DELETE FROM EMP WHERE EMPNO=@eno";
                 command = new SqlCommand(sql, connection);
+
+                command.Parameters.AddWithValue("eno", EmpNo);
                 //command.CommandType = CommandType.StoredProcedure;
-               
+
                 if (connection.State == ConnectionState.Closed)
                 {
                     connection.Open();
